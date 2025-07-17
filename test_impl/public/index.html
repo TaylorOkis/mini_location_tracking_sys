@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Connection is being established</h1>
+    <div class="container">
+      <p class="message">
+        This page is created to understand how websocket works.
+      </p>
+    </div>
+    <div class="container">
+      <center>
+        <button id="upvote-btn">Upvote</button>
+        <p id="upvote-count">0 Upvotes</p>
+      </center>
+
+      <center>
+        <button id="subtract-btn">-</button>
+        <button id="add-btn">+</button>
+        <p id="stars">0</p>
+      </center>
+    </div>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script>
+      const socket = io(); // input url for when frontend is hosted differently.;
+
+      var btn = document.getElementById("upvote-btn");
+      var upvote_val = false;
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        upvote_val = upvote_val ? false : true;
+        socket.emit("upvote-event", upvote_val);
+      });
+      socket.on("update-upvotes", (f_str) => {
+        document.getElementById("upvote-count").innerHTML = f_str;
+      });
+
+      var addBtn = document.getElementById("add-btn");
+      addBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        socket.emit("click-stars", true);
+      });
+
+      var subtractBtn = document.getElementById("subtract-btn");
+      subtractBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        socket.emit("click-stars", false);
+      });
+
+      socket.on("update-stars", (currentStars) => {
+        document.getElementById("stars").innerHTML = currentStars;
+      });
+    </script>
+  </body>
+</html>
