@@ -31,7 +31,7 @@ app.post("/create_order_for_customer", (req, res) => {
 });
 
 app.get("/users", (req, req) => {
-  res.status(200).json({ status: success, data: usersConnected });
+  res.status(200).json({ status: "success", data: usersConnected });
 });
 
 io.on("connection", (socket) => {
