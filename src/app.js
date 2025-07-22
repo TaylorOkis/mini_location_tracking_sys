@@ -30,7 +30,7 @@ app.post("/create_order_for_customer", (req, res) => {
   res.status(201).json({ status: "success" });
 });
 
-app.get("/users", (req, req) => {
+app.get("/users", (req, res) => {
   res.status(200).json({ status: "success", data: usersConnected });
 });
 
