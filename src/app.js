@@ -30,6 +30,10 @@ app.post("/create_order_for_customer", (req, res) => {
   res.status(201).json({ status: "success" });
 });
 
+app.get("/users", (req, req) => {
+  res.status(200).json({ status: success, data: usersConnected });
+});
+
 io.on("connection", (socket) => {
   // Register Connection
   socket.on("connect-user", (userId, role) => {
@@ -58,7 +62,7 @@ io.on("connection", (socket) => {
     console.log(`Location from ${driverId}: ${lat}, ${lng}`);
 
     // Emit location to admin
-    io.to("admin-room").emit("driver-location", { driverId, lat, lng });
+    io.emit("driver-location", { driverId, lat, lng });
 
     // Emit ETA to customers who are connected (online)
     const orders = driverOrdersMap.get(driverId) || {};
