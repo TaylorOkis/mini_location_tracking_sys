@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
     console.log(`Location from ${driverId}: ${lat}, ${lng}`);
 
     // Emit location to admin
-    io.emit("driver-location", { driverId, lat, lng });
+    io.in("admin-room").emit("driver-location", { driverId, lat, lng });
 
     // Emit ETA to customers who are connected (online)
     const orders = driverOrdersMap.get(driverId) || {};
